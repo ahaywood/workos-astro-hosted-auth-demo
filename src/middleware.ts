@@ -4,8 +4,6 @@ import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { WorkOS } from "@workos-inc/node";
 import { sealData, unsealData } from 'iron-session';
 
-import { sequence } from "astro:middleware";
-
 const workos = new WorkOS(import.meta.env.WORKOS_API_KEY);
 const clientId = import.meta.env.WORKOS_CLIENT_ID;
 
@@ -96,6 +94,9 @@ export async function onRequest(context, next) {
   if (context.url.pathname.startsWith("/admin/")) {
     return await withAuth(context, next);
   } else {
+
+    // check to see if the user is authenticated
+
     // return a Response or the result of calling `next()`
     return next();
   }
